@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import classes from './Card.module.css';
+
 
 const Card = (props) => {
     const [selectedOption, setSelectedOption] = useState(null);
@@ -22,7 +22,6 @@ const Card = (props) => {
                 <button disabled={correct} onClick={() => setSelectedOption(props.options.option3)} className={classes.Option}>{props.options.option3}</button>
                 <button disabled={correct} onClick={() => setSelectedOption(props.options.option4)} className={classes.Option}>{props.options.option4}</button>
             </div>
-            <button disabled={selectedOption === null} onClick={checkAnswer} className={classes.CheckButton}>Check</button>
         </div>
     );
 }
