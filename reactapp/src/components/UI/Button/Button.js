@@ -1,10 +1,16 @@
-import React from 'react';
+import styles from "./Button.module.css";
 
 const Button = (props) => {
   return (
-    <button className="Button" onClick={props.onClick}>
-      {props.children}
-    </button>
+    <>
+      <button
+        className={styles.ButtonContainer}
+        style={props.ButtonStyle}
+        disabled={props.disabled}
+      >
+        {props.buttonText}
+      </button>
+    </>
   );
 };
 

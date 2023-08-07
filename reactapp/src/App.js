@@ -1,29 +1,101 @@
-import React, { useState } from 'react';
-import Button from './components/UI/Button/Button';
-import Banner from './components/Banner/Banner';
+import styles from "./App.module.css";
+import Banner from "./Componets/UI/Banner/Banner";
+import { useState } from "react";
+import Button from "./Componets/UI/Button/Button";
+import QuizData from "./Data/Data";
+import Card from "./Componets/UI/Card/Card";
 
-const App = () => {
-  const [showBanner, setShowBanner] = useState(false);
-  const [questionsCorrect, setQuestionsCorrect] = useState(0);
+const resultBanner = {
+  backgroundColor: "#FA5F55",
+  borderRadius: "2%",
+  fontWeight: "bold",
+};
 
-  const handleClick = () => {
-    setShowBanner(true);
-  };
+const startButtonStyle = {
+  backgroundColor: "#FFDBAC",
+  textAlign: "center",
+  width: "100%",
+};
 
-  const handleCorrect = () => {
-    setQuestionsCorrect(questionsCorrect + 1);
-  };
+const optionsButtonStyle = {
+  backgroundColor: "#FFDBAC",
+  textAlign: "center",
+  width: "100%",
+};
+
+const showResultButtonStyle = {
+  backgroundColor: "green",
+  textAlign: "center",
+  color: "white",
+};
+
+function App() {
+  const [showResult, setShowResult] = useState(false);
+  const [showStartBtn, setShowStartBtn] = useState(true);
+  const [countCorrectAnswers, setCountCorrectAnswers] = useState(0);
+
+  function onClickHandler() {
+    setShowStartBtn(!showStartBtn);
+    setShowResult(false);
+    setCountCorrectAnswers(0);
+  }
+
+  function showResultHandler() {
+    setShowStartBtn(!showStartBtn);
+    setShowResult(false);
+    setShowResult(true);
+  }
 
   return (
-    <div>
+    <div className={styles.Wrapper}>
       <h1>Quizz App</h1>
-      {showBanner ? (
-        <Banner questionsCorrect={questionsCorrect} />
-      ) : (
-        <Button onClick={handleClick}>Start Quiz</Button>
+
+      <ResultBanner showResult={showResult} result={countCorrectAnswers} />
+
+      <div className={styles.StartButton} onClick={onClickHandler}>
+        {showStartBtn && (
+          <Button buttonText={"Start Quiz"} ButtonStyle={startButtonStyle} />
+        )}
+      </div>
+
+      {!showStartBtn && (
+        <div className={styles.QuizDataContainer}>
+          {QuizData.map((value, index) => {
+            return (
+              <Card
+                key={index}
+                value={value}
+                ButtonStyle={optionsButtonStyle}
+                countCorrectAnswers={countCorrectAnswers}
+                setCountCorrectAnswers={setCountCorrectAnswers}
+              />
+            );
+          })}
+        </div>
+      )}
+      {!showStartBtn && (
+        <div className={styles.ShowResultButton} onClick={showResultHandler}>
+          <Button
+            buttonText={"Show Result"}
+            ButtonStyle={showResultButtonStyle}
+          />
+        </div>
       )}
     </div>
   );
-};
+}
+
+function ResultBanner({ showResult, result }) {
+  return (
+    <>
+      {showResult && (
+        <Banner
+          styleObject={resultBanner}
+          text={`You have answered ${result}/5 correctly`}
+        />
+      )}
+    </>
+  );
+}
 
 export default App;
