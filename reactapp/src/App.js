@@ -1,101 +1,17 @@
-import styles from "./App.module.css";
-import Banner from "./Componets/UI/Banner/Banner";
-import { useState } from "react";
-import Button from "./Componets/UI/Button/Button";
-import QuizData from "./Data/Data";
-import Card from "./Componets/UI/Card/Card";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const resultBanner = {
-  backgroundColor: "#FA5F55",
-  borderRadius: "2%",
-  fontWeight: "bold",
-};
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-const startButtonStyle = {
-  backgroundColor: "#FFDBAC",
-  textAlign: "center",
-  width: "100%",
-};
-
-const optionsButtonStyle = {
-  backgroundColor: "#FFDBAC",
-  textAlign: "center",
-  width: "100%",
-};
-
-const showResultButtonStyle = {
-  backgroundColor: "green",
-  textAlign: "center",
-  color: "white",
-};
-
-function App() {
-  const [showResult, setShowResult] = useState(false);
-  const [showStartBtn, setShowStartBtn] = useState(true);
-  const [countCorrectAnswers, setCountCorrectAnswers] = useState(0);
-
-  function onClickHandler() {
-    setShowStartBtn(!showStartBtn);
-    setShowResult(false);
-    setCountCorrectAnswers(0);
-  }
-
-  function showResultHandler() {
-    setShowStartBtn(!showStartBtn);
-    setShowResult(false);
-    setShowResult(true);
-  }
-
-  return (
-    <div className={styles.Wrapper}>
-      <h1>Quizz App</h1>
-
-      <ResultBanner showResult={showResult} result={countCorrectAnswers} />
-
-      <div className={styles.StartButton} onClick={onClickHandler}>
-        {showStartBtn && (
-          <Button buttonText={"Start Quiz"} ButtonStyle={startButtonStyle} />
-        )}
-      </div>
-
-      {!showStartBtn && (
-        <div className={styles.QuizDataContainer}>
-          {QuizData.map((value, index) => {
-            return (
-              <Card
-                key={index}
-                value={value}
-                ButtonStyle={optionsButtonStyle}
-                countCorrectAnswers={countCorrectAnswers}
-                setCountCorrectAnswers={setCountCorrectAnswers}
-              />
-            );
-          })}
-        </div>
-      )}
-      {!showStartBtn && (
-        <div className={styles.ShowResultButton} onClick={showResultHandler}>
-          <Button
-            buttonText={"Show Result"}
-            ButtonStyle={showResultButtonStyle}
-          />
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ResultBanner({ showResult, result }) {
-  return (
-    <>
-      {showResult && (
-        <Banner
-          styleObject={resultBanner}
-          text={`You have answered ${result}/5 correctly`}
-        />
-      )}
-    </>
-  );
-}
-
-export default App;
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

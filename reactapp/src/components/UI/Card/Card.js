@@ -1,35 +1,30 @@
-import { useState } from "react";
-import Button from "../Button/Button";
-import styles from "./Card.module.css";
+import React, { useState } from "react";
+
 
 const Card = (props) => {
-  const [disabled, setDisabled] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [correct, setCorrect] = useState(false);
 
-  const getSelectedValue = (option) => {
-    setDisabled(true);
-    if (props.value.correctAnswer === option) {
-      props.setCountCorrectAnswers(props.countCorrectAnswers + 1);
+    const checkAnswer = () => {
+        if (selectedOption === props.answer) {
+            setCorrect(true);
+            props.correctAnswerMarkUpdate();
+        }
+        props.attempt();
     }
-  };
 
-  return (
-    <div className={styles.cardContainer}>
-      <div className={styles.question}>{props.value.Question}</div>
-      <div className={styles.options}>
-        {props.value.options.map((option, index) => {
-          return (
-            <div key={index} onClick={() => getSelectedValue(option)}>
-              <Button
-                buttonText={option}
-                ButtonStyle={props.ButtonStyle}
-                disabled={disabled}
-              />
+    return (
+        <div className={classes.Card}>
+            <h4>{props.question}</h4>
+            <div className={classes.OptionsContainer}>
+                <button disabled={correct} onClick={() => setSelectedOption(props.options.option1)} className={classes.Option}>{props.options.option1}</button>
+                <button disabled={correct} onClick={() => setSelectedOption(props.options.option2)} className={classes.Option}>{props.options.option2}</button>
+                <button disabled={correct} onClick={() => setSelectedOption(props.options.option3)} className={classes.Option}>{props.options.option3}</button>
+                <button disabled={correct} onClick={() => setSelectedOption(props.options.option4)} className={classes.Option}>{props.options.option4}</button>
             </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
+            {/* <button disabled={selectedOption === null} onClick={checkAnswer} className={classes.CheckButton}>Check</button> */}
+        </div>
+    );
+}
 
 export default Card;
