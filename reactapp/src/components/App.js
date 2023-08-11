@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Button from './components/UI/Button/Button';
-import Banner from './components/Banner/Banner';
+import Button from './UI/Button/Button';
+import Banner from './Banner/Banner';
 
 const App = () => {
   const [showBanner, setShowBanner] = useState(false);
